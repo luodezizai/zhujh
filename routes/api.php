@@ -16,3 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix('auth')->group(function($router) {
+    $router->get('login', 'AuthController@login');
+    $router->get('logout', 'AuthController@logout');
+
+});
+
+Route::middleware('refresh.token')->group(function($router) {
+    $router->get('profile','UserController@profile');
+});
